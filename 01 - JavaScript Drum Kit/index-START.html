@@ -7,7 +7,6 @@
 </head>
 <body>
 
-
   <div class="keys">
     <div data-key="65" class="key">
       <kbd>A</kbd>
@@ -58,6 +57,41 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+  const keys = document.querySelectorAll('kbd')
+  const arrKeys = Array.apply(null, keys).map(key => key.textContent)
+  const audioKey = (char) => document.querySelector(`audio[data-key="${char.charCodeAt()}"]`)
+  const divKey = (char) => document.querySelector(`div[data-key="${char.charCodeAt()}"]`)
+
+  const playSound = (e) => {
+    const strKey = e.key.toUpperCase()
+
+    audioKey(strKey).currentTime = 0
+    arrKeys.includes(strKey) && audioKey(strKey).play()
+  }
+
+  const addClass = (e) => {
+    const strKey = e.key.toUpperCase()
+
+    divKey(strKey).classList.add('playing')
+  }
+
+  const removeClass = (e) => {
+    const strKey = e.key.toUpperCase()
+
+    divKey(strKey).classList.remove('playing')
+  }
+
+  const keydownToggler = (e) => {
+    playSound(e)
+    addClass(e)
+  }
+
+  const keyupToggler = (e) => {
+    removeClass(e)
+  }
+
+  document.addEventListener('keydown', keydownToggler)
+  document.addEventListener('keyup', keyupToggler)
 
 </script>
 
