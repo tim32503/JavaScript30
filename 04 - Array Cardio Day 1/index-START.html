@@ -37,28 +37,68 @@
     
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    const fifteen = inventors.filter(inventor => Math.floor(inventor.year / 100) === 15)
+    console.table(fifteen)
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
+    const name = inventors.map(inventor => `${inventor.first} ${inventor.last}`)
+    console.log(name)
+
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    const compareByBirthdate = (a, b) => a.year - b.year
+    const sortByBirthdate = inventors.sort(compareByBirthdate)
+    
+    console.table(sortByBirthdate)
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
+    const reducer = (acc, cur) => acc + cur
+    const totalYears = inventors.map(inventor => inventor.passed - inventor.year).reduce(reducer)
+
+    console.log(totalYears)
 
     // 5. Sort the inventors by years lived
+    const compareByLived = (a, b) => (b.passed - b.year) - (a.passed - a.year)
+    const sortByLived = inventors.sort(compareByLived)
+    
+    console.table(sortByLived)
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+    fetch('https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&list=categorymembers&cmtitle=Category%3ABoulevards%20in%20Paris&cmlimit=500')
+      .then(response => response.json())
+      .then(list => {
+        const listArray = list.query.categorymembers.map(page => page.title).filter(title => title.includes('de'))
 
+        console.log(listArray)
+      })
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    const compareByLastName = (a, b) => {
+      const [aLast, aFirst] = a.split(', ')
+      const [bLast, bFirst] = b.split(', ')
+
+      return (bLast > aLast) ? -1 : 1
+    }
+    const sortByLastName = people.sort(compareByLastName)
+    
+    console.log(sortByLastName)
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+    const count = (obj, cur) => {
+      (!obj[cur]) ? obj[cur] = 1 : obj[cur]++
+      
+      return obj
+    }
+    const summary = data.reduce(count, {})
+
+    console.log(summary)
 
   </script>
 </body>
