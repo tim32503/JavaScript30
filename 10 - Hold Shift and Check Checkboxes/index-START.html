@@ -96,6 +96,33 @@
   </div>
 
 <script>
+  let lastChecked, current;
+  let inBetween = false;
+  const checkboxList = document.querySelectorAll('input[type="checkbox"]');
+  const handleCheck = (e) => {
+    current = e.currentTarget;
+
+    if(e.shiftKey && current.checked) {
+      checkboxList.forEach(checkbox => {
+        console.log(checkbox);
+        if(checkbox === current || checkbox === lastChecked) {
+          inBetween = !inBetween;  
+        }
+
+        if(inBetween) {
+          checkbox.checked = true;
+        }
+        
+      });
+    }
+    
+    lastChecked = current;
+  }
+
+  checkboxList.forEach(checkbox => {
+    checkbox.addEventListener('click', handleCheck);
+  });
+
 </script>
 </body>
 </html>
