@@ -104,7 +104,7 @@
 
     if(e.shiftKey && current.checked) {
       checkboxList.forEach(checkbox => {
-        console.log(checkbox);
+        
         if(checkbox === current || checkbox === lastChecked) {
           inBetween = !inBetween;  
         }
@@ -112,7 +112,7 @@
         if(inBetween) {
           checkbox.checked = true;
         }
-        
+
       });
     }
     
