@@ -7,6 +7,19 @@
 </head>
 <body>
 <script>
+  const password = 'haohao';
+  const keyList = [];
+
+  document.addEventListener('keyup', (e) => {
+    console.log(e.key);
+    keyList.push(e.key);
+    keyList.splice(- password.length - 1, keyList.length - password.length);
+    console.log(keyList);
+
+    if(keyList.join('').includes(password)) {
+      cornify_add();
+    }
+  });
 </script>
 </body>
 </html>
